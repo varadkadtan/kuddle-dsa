@@ -1,0 +1,52 @@
+#include<iostream>
+#include<vector>
+#include<set>
+#include<map>
+#include<climits>
+#include<algorithm>
+
+using namespace std;
+
+int main(){
+    int T;
+    cin>>T;
+    while (T--){
+        int N,K;
+        cin>>N>>K;
+        vector<int>category(N);
+        vector<int>time(N);
+        map<int,int>minCookTime;
+        set<int>distinctCat;
+        for(int i= 0;i<N;++i){
+            cin>> category[i];
+            distinctCat.insert(category[i]);
+
+
+        }
+        if(distinctCat.size()<K){
+            cout<<-1<<endl;
+            continue;
+
+        }
+        for(int i = 0;i<N;++i){
+            cin>> time[i];
+            if(minCookTime.find(category[i])== minCookTime.end()){
+                minCookTime[category[i]]= INT_MAX;
+            }
+            minCookTime[category[i]] = min(minCookTime[category[i]],time[i]);
+
+        }
+        vector<int>minCookTimes;
+        for(auto it: minCookTime){
+            minCookTimes.push_back(it.second);
+        }
+        sort(minCookTimes.begin(),minCookTimes.end());
+        int totCookTime = 0;
+        for(int i =0;i<K;++i){
+            totCookTime += minCookTimes[i];
+
+        }
+        cout<< totCookTime <<endl;
+    }
+    return 0;
+}
